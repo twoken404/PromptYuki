@@ -45,6 +45,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tauriScript: cd promptyuki && npm run tauri
-          args: --release
+          tauriScript: npm run tauri
+          args: build --release
           projectPath: ./promptyuki/src-tauri
