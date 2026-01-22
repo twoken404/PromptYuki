@@ -6,8 +6,13 @@ on:
       - 'v*'
 
 jobs:
-  build-windows:
-    runs-on: windows-latest
+  build-and-release:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [windows-latest]
+
+    runs-on: ${{ matrix.platform }}
 
     steps:
       - name: Checkout repository
@@ -20,44 +25,26 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'promptyuki/package-lock.json'
 
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+
       - name: Install frontend dependencies
         run: |
           cd promptyuki
           npm install
 
-      - name: Build Tauri app
+      - name: Build frontend
         run: |
           cd promptyuki
-          npm run tauri build
+          npm run build
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: List build outputs
-        run: |
-          ls -R promptyuki/src-tauri/target/release/
-
-      - name: Upload artifact (Windows)
-        uses: actions/upload-artifact@v4
         with:
-          name: windows
-          path: promptyuki/src-tauri/target/release/promptyuki.exe
-
-  release:
-    needs: build-windows
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
-      - name: Display structure of downloaded files
-        run: ls -R artifacts
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: artifacts/windows/promptyuki.exe
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tauriScript: cd promptyuki && npm run tauri
+          args: --release
+          projectPath: ./promptyuki/src-tauri
