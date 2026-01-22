@@ -1,7 +1,88 @@
-# Tauri + Vue + TypeScript
+# PromptYuki
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+一款简单好用的 AI 提示词管理工具，帮你轻松记录和复用 AI 提示词。
 
-## Recommended IDE Setup
+## 为什么需要 PromptYuki？
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+你是不是也有这样的经历：
+
+- 💬 每天都要和 ChatGPT、Claude、豆包等 AI 助手聊天
+- 📝 遇到好用的提示词，随手记在记事本、微信文件传输助手、或者草稿纸上
+- 🤔 过段时间想用那个提示词，结果死活找不到，或者忘得一干二净
+- 🔄 每次都要重新想怎么提问，效率太低了
+
+有了 **PromptYuki**，这些问题都解决了！
+
+## 主要功能
+
+✅ **一键记录** - 遇到好用的提示词，随时记下来，再也不怕丢失
+
+✅ **分类管理** - 可以创建文件夹，把不同类型的提示词分类整理
+
+✅ **快速搜索** - 输入关键词，立刻找到你想要的提示词
+
+✅ **一键复制** - 找到提示词后，一键复制到剪贴板，直接粘贴到 AI 对话框
+
+✅ **本地存储** - 所有数据保存在本地，不上传云端，隐私安全
+
+✅ **托盘常驻** - 最小化到系统托盘，随时可以打开使用
+
+## 使用场景
+
+📚 **学习提示词工程** - 收集各种经典的提示词模板，随时查看学习
+
+💼 **工作效率提升** - 把常用的办公提示词存起来，不用每次都重新想
+
+🎨 **AI 绘图提示词** - 收集好用的绘图关键词，快速生成高质量图片
+
+✍️ **文案写作** - 存储常用的写作模板、框架，提高创作效率
+
+## 快速开始
+
+### 安装
+
+1. 从 [Releases](https://github.com/twoken404/PromptYuki/releases) 页面下载最新版本
+2. 解压后运行 `PromptYuki.exe`
+
+### 基本使用
+
+1. **新建提示词** - 点击右上角 "+" 按钮，输入标题和内容
+2. **创建文件夹** - 点击左侧文件夹图标，创建分类
+3. **搜索提示词** - 在搜索框输入关键词，实时筛选
+4. **复制内容** - 点击提示词下方的复制按钮
+5. **编辑/删除** - 右键点击提示词，选择编辑或删除
+
+## 开发环境
+
+如果你想自己编译或修改这个项目：
+
+```bash
+# 安装依赖
+cd promptyuki
+npm install
+
+# 运行开发模式
+npm run tauri dev
+
+# 打包生成可执行文件
+npm run tauri build
+```
+
+## 技术栈
+
+- **前端**: Vue 3 + TypeScript + UnoCSS
+- **桌面框架**: Tauri 2
+- **数据存储**: SQLite (Rust)
+- **构建工具**: Vite
+
+## 注意事项
+
+⚠️ **快捷键功能暂未开放** - 由于技术原因，全局快捷键功能暂时关闭，后续版本会重新开放
+
+## 许可证
+
+[MIT License](../LICENSE)
+
+---
+
+觉得好用的话，欢迎给个 ⭐ Star 支持！
