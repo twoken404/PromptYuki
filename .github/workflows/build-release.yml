@@ -44,7 +44,6 @@ jobs:
           path: |
             promptyuki/src-tauri/target/*/release/bundle/nsis/*.exe
             promptyuki/src-tauri/target/*/release/*.exe
-        if-no-files-found: warn
 
   release:
     needs: build-windows
