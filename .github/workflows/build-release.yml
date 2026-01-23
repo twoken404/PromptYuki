@@ -30,21 +30,10 @@ jobs:
         with:
           targets: ${{ matrix.platform == 'windows-latest' && 'x86_64-pc-windows-msvc' || 'x86_64-apple-darwin,aarch64-apple-darwin' }}
 
-      - name: Install frontend dependencies
-        run: |
-          cd promptyuki
-          npm install
-
-      - name: Build frontend
-        run: |
-          cd promptyuki
-          npm run build
-
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tauriScript: npm run tauri
-          args: ""
           projectPath: ./promptyuki/src-tauri
