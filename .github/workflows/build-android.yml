@@ -62,3 +62,12 @@ jobs:
           name: android-apk
           path: |
             promptyuki/src-tauri/gen/android/app/build/outputs/apk/**/*.apk
+
+      - name: Release APK
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            promptyuki/src-tauri/gen/android/app/build/outputs/apk/**/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
