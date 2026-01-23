@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [windows-latest]
+        platform: [windows-latest, macos-latest]
 
     runs-on: ${{ matrix.platform }}
 
@@ -28,7 +28,7 @@ jobs:
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: x86_64-pc-windows-msvc
+          targets: ${{ matrix.platform == 'windows-latest' && 'x86_64-pc-windows-msvc' || 'x86_64-apple-darwin,aarch64-apple-darwin' }}
 
       - name: Install frontend dependencies
         run: |

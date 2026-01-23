@@ -1,0 +1,64 @@
+name: Build Android
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'promptyuki/package-lock.json'
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install frontend dependencies
+        run: |
+          cd promptyuki
+          npm install
+
+      - name: Build frontend
+        run: |
+          cd promptyuki
+          npm run build
+
+      - name: Install tauri-cli
+        run: |
+          cd promptyuki
+          cargo install tauri-cli --version "^2.0.0" --features android
+
+      - name: Build Android APK
+        run: |
+          cd promptyuki
+          cargo tauri android build
+        env:
+          ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: |
+            promptyuki/src-tauri/gen/android/app/build/outputs/apk/**/*.apk
